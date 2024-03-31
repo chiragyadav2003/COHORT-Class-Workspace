@@ -1,4 +1,5 @@
 import express from "express";
+import {BACKEND_URL} from "@repo/common/config"
 
 const app = express()
 
@@ -7,6 +8,8 @@ app.get("/", (req,res)=>{
         "msg":"server is healthy"
     })
 })
+
+console.log("backend url = ",BACKEND_URL)
 
 app.listen(3004, ()=>{
     console.log("backend is running on port - 3004")
