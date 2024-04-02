@@ -1,6 +1,7 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
+import { signIn } from 'next-auth/react';
 
 export const NEXT_AUTH = {
         providers: [
@@ -58,5 +59,8 @@ export const NEXT_AUTH = {
     
                 return session
             }
+        },
+        pages:{
+            signIn:"/signin"
         }
 }
