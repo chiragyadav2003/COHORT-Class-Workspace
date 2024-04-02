@@ -28,7 +28,7 @@ const handler = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     callbacks:{
         signIn:({user})=>{
-            console.log('signinn emmail', user.email)
+            console.log('signin callback email', user.email)
             if(user.email==='random@gmail.com'){
                 console.log('blocked email',)
                 return false
@@ -40,7 +40,17 @@ const handler = NextAuth({
             console.log("token callback toekn ", token);
 
             return token
+        },
+        session:({session,token,user}:any)=>{
+            // console.log('session callback session ', session)
+            if(session && session.user){
+                session.user.id = token.userId
+            }
+            console.log('session callback session ', session)
+
+            return session
         }
+
     }
         
 })
