@@ -30,10 +30,16 @@ const handler = NextAuth({
         signIn:({user})=>{
             console.log('signinn emmail', user.email)
             if(user.email==='random@gmail.com'){
-                console.log('email', user.email)
+                console.log('blocked email',)
                 return false
             }
             return true
+        },
+        jwt:({token,user})=>{
+            token.userId = token.sub
+            console.log("token callback toekn ", token);
+
+            return token
         }
     }
         
