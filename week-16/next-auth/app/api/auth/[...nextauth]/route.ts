@@ -1,59 +1,9 @@
+import { NEXT_AUTH } from "@/app/lib/auth";
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 
-const handler = NextAuth({
-    providers: [
-        CredentialsProvider({
-            name: 'Email',
-            credentials: {
-                username:{ label:"Username", type:"text", placeholder:"Email" },
-                password:{ label:"Password", type:"password", placeholder:"Password" }
-            },
-            async authorize(credentials:any){
-                console.log(credentials)
-
-                // const username = credentials.username,
-                // const password = credentials.password,
-                // const user = await prisma.user.findOne({email:username ,password:password})
-
-                return {
-                    id:"user1",
-                    email:credentials.username,
-                    name:"Chirag Yadav"
-                }
-            }
-        })
-    ],
-    secret: process.env.NEXTAUTH_SECRET,
-    callbacks:{
-        signIn:({user})=>{
-            console.log('signin callback email', user.email)
-            if(user.email==='random@gmail.com'){
-                console.log('blocked email',)
-                return false
-            }
-            return true
-        },
-        jwt:({token,user})=>{
-            token.userId = token.sub
-            console.log("token callback toekn ", token);
-
-            return token
-        },
-        session:({session,token,user}:any)=>{
-            // console.log('session callback session ', session)
-            if(session && session.user){
-                session.user.id = token.userId
-            }
-            console.log('session callback session ', session)
-
-            return session
-        }
-
-    }
-        
-})
+const handler = NextAuth(NEXT_AUTH)
 
 export const GET = handler;
 export const POST = handler;
