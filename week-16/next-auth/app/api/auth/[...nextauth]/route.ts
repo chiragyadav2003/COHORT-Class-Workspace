@@ -18,7 +18,9 @@ const handler = NextAuth({
                 // const user = await prisma.user.findOne({email:username ,password:password})
 
                 return {
-                    id:"user1"
+                    id:"user1",
+                    email:"chirag@gmail.com",
+                    name:"Chirag Yadav"
                 }
             }
         })
