@@ -19,13 +19,24 @@ const handler = NextAuth({
 
                 return {
                     id:"user1",
-                    email:"chirag@gmail.com",
+                    email:credentials.username,
                     name:"Chirag Yadav"
                 }
             }
         })
     ],
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET,
+    callbacks:{
+        signIn:({user})=>{
+            console.log('signinn emmail', user.email)
+            if(user.email==='random@gmail.com'){
+                console.log('email', user.email)
+                return false
+            }
+            return true
+        }
+    }
+        
 })
 
 export const GET = handler;
