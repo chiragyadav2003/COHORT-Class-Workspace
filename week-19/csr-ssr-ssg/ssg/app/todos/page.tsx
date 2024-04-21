@@ -1,13 +1,17 @@
 
+import revalidateTodosTag from "@/app/lib/actions/tags";
+
 export default async function Home() {
 
-  //now we will revalidate the todos after every 10 seconds 
-  // Clear cache every 10 seconds
+  //now we will revalidate the page if request has "todos" tag
   const res = await fetch("https://sum-server.100xdevs.com/todos", {
     next: {
-      revalidate: 10
+      tags: ["todos"]
     }
   })
+
+  revalidateTodosTag()
+
   const data = await res.json()
   console.log(JSON.stringify(data))
   return (
