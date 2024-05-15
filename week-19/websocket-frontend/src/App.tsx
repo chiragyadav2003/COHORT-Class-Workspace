@@ -15,7 +15,11 @@ function App() {
     }
     socket.onmessage = (message) => {
       console.log('Received message : ', message.data);
-      setLatestServerMessages(message.data)
+      setLatestServerMessages(message.data);
+    }
+
+    return () => {
+      socket.close();
     }
   }, [])
 
