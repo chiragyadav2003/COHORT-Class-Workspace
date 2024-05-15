@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-function App() {
-
+//creating custom hook for socket connection
+function useSocket() {
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [latestServerMessages, setLatestServerMessages] = useState("");
-  const [clientMessage, setClientMessage] = useState("");
 
   useEffect(() => {
     const socket = new WebSocket(`ws://localhost:8080`);
@@ -13,15 +11,31 @@ function App() {
       console.log("Connected");
       setSocket(socket);
     }
-    socket.onmessage = (message) => {
-      console.log('Received message : ', message.data);
-      setLatestServerMessages(message.data);
-    }
 
     return () => {
       socket.close();
     }
   }, [])
+
+  return socket;
+}
+
+
+function App() {
+
+  const socket = useSocket();
+
+  const [latestServerMessages, setLatestServerMessages] = useState("");
+  const [clientMessage, setClientMessage] = useState("");
+
+  useEffect(() => {
+    socket?.addEventListener('message', (event) => {
+      console.log('@@@@@Received message : ', event.data);
+      setLatestServerMessages(event.data);
+    });
+  }, [socket])
+
+
 
   if (!socket) {
     return (
