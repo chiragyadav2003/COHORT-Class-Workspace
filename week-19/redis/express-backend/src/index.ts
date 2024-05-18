@@ -11,6 +11,15 @@ client.on('error', (err) => console.log("Redis client error ", err));
 app.post("/submit", async (req, res) => {
     const { problemId, code, language } = req.body;
 
+    //problems are sent to queue using postman body json
+    /* 
+        {
+            "problemId":"problem1",
+            "code":"code1",
+            "language":"c++"
+        }
+    */
+
     //how to access pushed data inside queue "problems"
     /*
         docker exec -it my-redis /bin/bash
@@ -25,6 +34,7 @@ app.post("/submit", async (req, res) => {
     try {
         await client.lPush("problems", JSON.stringify({ code, language, problemId }));
         //store in db
+        console.log("data sent in 'problems' queue")
         res.status(200).send("Submission received in queue and stored");
     } catch (error) {
         console.error("Redis error ", error);
