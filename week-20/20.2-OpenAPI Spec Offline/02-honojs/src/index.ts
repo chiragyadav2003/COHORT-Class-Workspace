@@ -1,4 +1,5 @@
 import { createRoute, OpenAPIHono } from '@hono/zod-openapi';
+import { swaggerUI } from '@hono/swagger-ui';
 import { ParamsSchema } from './inputs';
 import { UserSchema } from './outputs';
 
@@ -40,5 +41,8 @@ app.doc('/doc', {
     title: 'My API',
   },
 })
+
+// Use the middleware to serve Swagger UI at /ui
+app.get('/ui', swaggerUI({ url: '/doc' }))
 
 export default app
