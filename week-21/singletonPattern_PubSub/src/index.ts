@@ -1,4 +1,4 @@
-import { games } from './store';
+import { gameManager } from './store';
 import { startLogger } from './logger';
 
 startLogger();
@@ -6,12 +6,7 @@ startLogger();
 const updateGame = () => {
   setInterval(() => {
     const newId = Math.floor(Math.random() * 100).toString();
-    games.push({
-      id: newId,
-      whitePlayer: `Alice ${newId}`,
-      blackPlayer: `Bob ${newId}`,
-      moves: []
-    })
+    gameManager.addGame(Math.floor(Math.random() * 10 + 1).toString())
   }, 5000);
 }
 updateGame()
