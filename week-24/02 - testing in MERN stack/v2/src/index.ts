@@ -24,3 +24,23 @@ app.post("/sum", (req, res) => {
     answer
   })
 });
+
+//* handling parameter passed from headers
+app.get("/sum", (req, res) => {
+  const parsedResponse = sumInput.safeParse({
+    a: Number(req.headers['a']),
+    b: Number(req.headers['b'])
+  });
+
+  if (!parsedResponse.success) {
+    return res.status(411).json({
+      message: "Incorrect inputs"
+    });
+  };
+
+  const answer = parsedResponse.data.a + parsedResponse.data.b;
+
+  res.json({
+    answer
+  });
+})
