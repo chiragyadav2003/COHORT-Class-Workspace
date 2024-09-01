@@ -1,11 +1,17 @@
 import { describe, expect, it, vi } from 'vitest';
 import request from "supertest";
 import { app } from "../index";
-import { prismaClient } from '../db';
 
-vi.mock("../db.ts", () => ({
-  prismaClient: { sum: { create: vi.fn() } }
-}))
+//* mocking our prismaClient
+vi.mock("../db.ts", () => {
+  return {
+    prismaClient: {
+      sum: {
+        create: vi.fn()
+      }
+    }
+  }
+})
 
 
 describe("POST /sum", () => {
