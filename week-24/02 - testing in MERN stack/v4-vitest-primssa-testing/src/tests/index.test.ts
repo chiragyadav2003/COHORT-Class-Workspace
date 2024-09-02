@@ -3,15 +3,18 @@ import request from "supertest";
 import { app } from "../index";
 
 //* mocking our prismaClient
-vi.mock("../db.ts", () => {
-  return {
-    prismaClient: {
-      sum: {
-        create: vi.fn()
-      }
-    }
-  }
-})
+// vi.mock("../db.ts", () => {
+//   return {
+//     prismaClient: {
+//       sum: {
+//         create: vi.fn()
+//       }
+//     }
+//   }
+// })
+
+//* Deep mocking
+vi.mock("../db.ts");
 
 
 describe("POST /sum", () => {
